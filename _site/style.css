@@ -1,5 +1,9 @@
+body {
+	background-color: rgb(255, 210, 255);
+}
+
 h1 {
-	font-family: helvetica;
+	font-family: times new roman;
 	font-weight: lighter;
 	font-size: 44px;
 	font-style: italic;
@@ -8,19 +12,42 @@ h1 {
 	letter-spacing: 10px;
 }
 
+h2 {
+	font-family: times new roman;
+	font-weight: lighter;
+	font-size: 20px;
+	font-style: italic;
+	color: rgb(0, 0, 255);
+	letter-spacing: 5px;
+}
+
 p {
-	font-family: helvetica;
+	font-family: times new roman;
 	font-weight: lighter;
 	text-align: justify;
 	line-height: 25px;
+	color: rgb(0, 0, 255);
 }
 
 a {
 	text-decoration: none;
+	color: rgb(150, 0, 255);
+}
+
+.list {
+	font-style: italic;
+    	letter-spacing: 5px;
+    	list-style: circle;
+    	color: rgb(150, 0, 255)
+}
+
+.research {
+	list-style: circle;
+	color: rgb(0, 0, 255);
 }
 
 .container {
-        font-family: helvetica;
+        font-family: times new roman;
 	font-weight: lighter;
 	text-align: justify;
 	line-height: 25px;
@@ -28,13 +55,24 @@ a {
 	margin: 0 auto;
 }
 
+.content {
+        font-family: times new roman;
+	font-weight: lighter;
+	text-align: justify;
+	line-height: 25px;
+	width: 1080px;
+	margin: 0 auto;
+	text-align: center;
+}
+
 .links {
-        font-family: helvetica;
+        font-family: times new roman;
 	font-weight: lighter;
 	text-align: center;
 	line-height: 25px;
 	width: 600px;
 	margin: 0 auto;
+	word-spacing: 30px;
 }
 
 
