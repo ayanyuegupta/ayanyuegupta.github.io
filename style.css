@@ -1,39 +1,38 @@
 body {
-	background-color: rgb(255, 210, 255);
+	background-color: rgb(245, 245, 245);
 }
 
 h1 {
-	font-family: times new roman;
-	font-weight: lighter;
+	font-family: 'Roboto';
+	font-weight: 300;
 	font-size: 44px;
-	font-style: italic;
 	text-align: center;
-	color: rgb(0, 0, 255);
-	letter-spacing: 10px;
+	color: rgb(255, 160, 220);
+	letter-spacing: 30px;
 }
 
 h2 {
-	font-family: times new roman;
-	font-weight: lighter;
+	font-family: 'Roboto';
+	font-weight: normal;
 	font-size: 20px;
 	font-style: italic;
-	color: rgb(0, 0, 255);
+	color: rgb(255, 160, 220);
 	letter-spacing: 5px;
 	margin-top: 50px;
 }
 
 p {
-	font-family: times new roman;
-	font-weight: lighter;
+	font-family: 'Roboto';
+	font-weight: normal;
 	font-size: 16px;
 	text-align: justify;
 	line-height: 25px;
-	color: rgb(0, 0, 255);
+	color: rgb(255, 160, 220);
 }
 
 a {
 	text-decoration: none;
-	color: rgb(150, 0, 255);
+	color: rgb(220, 160, 255);
 }
 
 .centre {
@@ -43,12 +42,12 @@ a {
 
 .research {
 	list-style: circle;
-	color: rgb(0, 0, 255);
+	color: rgb(255, 160, 220);
 }
 
 .container {
-        font-family: times new roman;
-	font-weight: lighter;
+        font-family: 'Roboto';
+	font-weight: normal;
 	text-align: justify;
 	line-height: 25px;
 	width: 700px;
@@ -57,12 +56,12 @@ a {
 }
 
 .horizontal_container {
+	font-family: 'Roboto';
 	display: flex;
 	flex-direction: row;
-	font-style: italic;
     	letter-spacing: 5px;
         font-size: 16px;
-    	color: rgb(150, 0, 255);
+    	color: rgb(220, 160, 255);
         width: 600px;
 	margin: 0 auto;
 	text-align: center;
@@ -70,15 +69,14 @@ a {
 }
 
 .list {
-        font-style: italic;
-    	letter-spacing: 5px;
+      	letter-spacing: 5px;
         font-size: 16px;
-    	color: rgb(150, 0, 255);
+    	color: rgb(220, 160, 255);
 }
 
 .content {
-        font-family: times new roman;
-	font-weight: lighter;
+        font-family: 'Roboto';
+	font-weight: normal;
 	text-align: justify;
 	line-height: 25px;
         font-size: 16px;
@@ -90,12 +88,12 @@ a {
 
 .title {
 	font-size: 16px;
-	color: rgb(0, 0, 255);
+	color: rgb(255, 160, 220);
 }
 
 .links {
-        font-family: times new roman;
-	font-weight: lighter;
+        font-family: 'Roboto';
+	font-weight: normal;
 	text-align: center;
 	line-height: 25px;
 	font-size: 16px;
