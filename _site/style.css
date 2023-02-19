@@ -36,13 +36,17 @@ a {
 	color: rgb(220, 160, 255);
 }
 
+li {
+	margin: 15px 0;
+}
+
 .centre {
 	display: block;
 	margin: 0 auto;
 }
 
 .research {
-	list-style: circle;
+	list-style: square;
 	color: rgb(255, 160, 220);
 }
 
