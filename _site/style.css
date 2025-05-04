@@ -40,6 +40,21 @@ li {
 	margin: 15px 0;
 }
 
+ul, ol {
+	padding-left: 2em;
+	margin-left: 0;
+	list-style-position: inside;
+}
+
+
+figcaption {
+	margin-top: 8px;
+        width: 150px; /* Match the width of your images */
+        word-wrap: break-word; /* Allows long words to break */
+        text-align: center;
+        display: block; /* Ensures caption takes full width */
+}
+
 .centre {
 	display: block;
 	margin: 0 auto;
@@ -63,6 +78,8 @@ li {
 .horizontal_container {
 	font-family: 'Roboto';
 	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
 	flex-direction: row;
     	letter-spacing: 5px;
         font-size: 16px;
@@ -74,10 +91,13 @@ li {
         margin-top: 50px;
 }
 
+
 .list {
       	letter-spacing: 5px;
+	font-style: italic;
         font-size: 16px;
     	color: rgb(160, 160, 255);
+	text-align: left;
 }
 
 .content {

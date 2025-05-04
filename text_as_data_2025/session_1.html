@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+	<title>Workshops/Teaching</title>
+	<link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400" rel="stylesheet">
+        <!-- Prism.js for syntax highlighting -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
+    </head>
+    <body>
+	<h1>AYAN-YUE GUPTA</h1>
+        
+	<!-- navigation-->
+        <div class="links">
+            <a href="/index.html">Home</a>
+	    <a href="/research.html">Research</a>
+	    <a href="/teaching.html">Teaching</a>
+	    <a href="/art.html">Art</a>
+	    <a href="/assets/CV.pdf">C.V.</a>
+	</div>
+
+	<!-- content-->
+	<div class="container">
+	    
+	    <h2>1. Setting up your work environment</h2>
+       	    <p>Hello everyone. The first thing to do when getting started with coding in python is to understand how everything is set up. Now, there are lots of options for integrated development environments and notebooks one can use, but before exploring those options, one should know the most basic set up possible, for which you need just 2 things:</p>
+	    <ul class="research">
+                <li>Text editor</li>
+	        <li>Command line</li>
+	    </ul>
+	    <p>We'll be using this minimal set up for the rest of my sessions.</p>
+	    <p>Now, if you've followed the setup for this session, you should already have selected a text editor, and have created a virtual environment in a directory of your choice. You should get into the habit of navigating to the directory of your environment and activating it whenever you want to work on a python project with the following commands:</p>
+	    <pre><code class="language-bash">#### navigate to the directory containing your virtual environment
+cd \Users\YourUsername\Documents\Projects\your_python_project
+
+#### activate your virtual environment
+#### Mac/Linux
+source env1/bin/activate
+#### Windows
+env1\Scripts\activate</code></pre>
+	    <p>Knowing how to manage virtual environments is useful because dealing with multiple python projects can get messy. One project might require an older version of a particular programme, while another project you are working might require a newer version of the same programme. Instead of upgrading/reverting programme versions everytime you want to work on different python projects, virtual environments lets you work with different versions of required programmes simultaneously.</p>
+	    
+	    <h2>2. Your first script</h2>
+	    <p>You are now in a position to write your first script! Using your text editor, create a file called <code>first_script.py</code> in the same directory containing your virtual environment. With your text editor, enter the following line into <code>first_script.py </code>:</p>
+	    <pre><code class="language-python">print('hello')</code></pre>
+	    <p>Save your file, and in the command line (ensuring you are in the same directory as <code>first_script.py</code>), and enter the command:</p>
+	    <pre><code class="language-bash">python first_script.py</code></pre>
+            <p>You should get the following output in your command line:</p>
+	    <pre><code class="language-bash">>>> hello</code></pre>
+	    <p>Congratulations on your first script! Note the workflow here: create script with text editor, save as <code>.py</code> file, run the file in command line. This is the fundamental process of using python.</p>
+	    
+	    <h2>3. Basics: variables, functions</h2> 
+	    <p>If we want to make scripts that can do a bit more than just print text, we need to make sure our code is organised
+            so that:</p>
+            <ul class="research">
+                <li>Code is legible, meaning we aren't spending 10 minutes every time we need to find some section of code that needs editing.</li>
+		<li>We are not constantly rewriting the same bit of code everywhere</li>
+	    </ul>
+	    <p>The basic tool for ensuring good organisation is the <i>function</i>. Functions allow us to package code we know we are going to use repeatedly in a neat way, and to enable that bit of repeatable code to work with many different inputs. For example, suppose in our script we know we are going to be printing a lot of similar stuff. Instead of rewriting the various combinations of what we want to print repeatedly, we can define a single function that gives us a basic template of what we want to print:</p>
+
+	    <pre><code class="language-python">def greetings(name, country):
+    
+    print(f'Hello, my name is {name} and I am from {country}.')</code></pre>
+
+	    <p>Now, whenever we want our script to introduce a different person, instead of repeatedly typing out variations of the greeting, we can simply call:</p>
+
+	    <pre><code class="language-python">greetings('John', 'Great Britain')
+greetings('Monica', 'Italy')</code></pre>
+	    <p>You'll notice that if we do not put the inputs into <code>greetings()</code> in quotation marks, the code will not work. This is because python is structured around the idea of <i>types</i> of values. In Python, values can be:</p>
+
+	    <ul class="research">
+                <li><code>str</code> (strings): Text values like 'John' or "Hello world"</li>
+    		<li><code>int</code> (integers): Whole numbers like 42 or -7</li>
+		<li><code>float</code> (floating point): Decimal numbers like 3.14 or -0.001</li>
+		<li><code>bool</code> (boolean): True or False values</li>
+		<li><code>list</code>, <code>dict</code>, <code>tuple</code>: Different ways to organize collections of values</li>
+	    </ul>
+
+	    <p>When we put text in quotation marks, we're creating a string value. Without the quotation marks, Python would think we're trying to refer to a <i>variable</i> called 'John', which doesn't exist in our code.</p>
+
+	    <p>Variables are names that refer to stored values. Think of them as labeled containers that hold data. For example:</p>
+
+	    <pre><code class="language-python">name = "John"
+age = 25
+height = 1.85
+countries_visited = ["France", "Japan", "Brazil"]</code></pre>
+
+	    <p>Here, <code>name</code>, <code>age</code>, <code>height</code>, and <code>countries_visited</code> are variables that store different types of values. We can use these variables in our functions:</p>
+
+	    <pre><code class="language-python">person_name = "Monica"
+person_country = "Italy"
+greetings(person_name, person_country)</code></pre>
+
+	    <p>This will produce the same output as <code>greetings('Monica', 'Italy')</code> because the variables contain those string values.</p>
+
+	    <p>Understanding value types and variables is crucial because Python treats different types differently. For example, the <code>+</code> operator adds numbers but concatenates strings:</p>
+
+	    <pre><code class="language-python">result1 = 5 + 10       # result1 equals 15
+result2 = "5" + "10"   # result2 equals "510"</code></pre>
+            
+	    <h2>4. Keeping code organised</h2>
+	    <p>To ensure organisation, it's a good idea to make sure your scripts always have this structure:</p>
+            <pre><code class="language-python">#### write imports at the beginning, e.g.:
+import os
+
+#### write functions and classes here, e.g.:
+def greetings(text):
+    
+    print(text)
+  
+
+def main():
+
+    ####call functions and classes here, e.g.:
+    greetings('hello')
+
+if __name__ == '__main__':
+    main()</code></pre>
+	  <p>Do not worry about what imports are for now - we'll cover those in 5 minutes. The key parts to understand in this structure are:</p>
+
+	  <ul class="research">
+	      <li>Imports go at the top of the file</li>
+  	      <li>Function definitions come next</li>
+	      <li>The <code>main()</code> function contains the code that actually runs when you execute the script</li>
+	      <li>The <code>if __name__ == '__main__'</code> line is a special Python construct that ensures your code only runs when the script is executed directly (not when imported by another script)</li>
+	  </ul>
+
+	  <p>Let's modify our first script to follow this pattern:</p>
+
+	  <pre><code class="language-python">def greetings(name, country):
+    print(f'Hello, my name is {name} and I am from {country}.')
+
+def main():
+    greetings('John', 'Great Britain')
+    greetings('Monica', 'Italy')
+
+if __name__ == '__main__':
+    main()</code></pre>
+
+	  <p>When you run this script, it will produce exactly the same output as before, but the code is now more organized and follows Python best practices. This structure will become especially valuable as your scripts grow larger and more complex.</p>
+
+       	</div> 
+
+	<!-- links -->
+	<div class="links">
+	    <a href="https://github.com/ayanyuegupta">github</a>
+	    <a href="https://www.instagram.com/ayanyuegupta/">instagram</a>
+	    <a href="https://www.youtube.com/channel/UClNL5hp3ENN-B0owGvb4dpw">youtube</a>
+	</div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    </body>
+</html>
