@@ -49,19 +49,49 @@ ul, ol {
 
 figcaption {
 	margin-top: 8px;
-        width: 150px; /* Match the width of your images */
+        width: auto; /* Match the width of your images */
         word-wrap: break-word; /* Allows long words to break */
         text-align: center;
         display: block; /* Ensures caption takes full width */
 }
+
+
+.menu {
+	width: 150px;
+}
+
 
 .centre {
 	display: block;
 	margin: 0 auto;
 }
 
+.contents_title {
+    text-align: center;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.contents_table {
+    list-style: none; /* Remove default bullets */
+    color: rgb(160, 160, 255);
+    text-align: center;
+    margin: 0 auto;
+    max-width: 600px;
+    padding-left: 0; /* Remove default padding */
+}
+
+.contents_table li {
+    display: inline-block; /* Makes the text align to the center */
+    text-align: center;
+    margin: 5px 0;
+    width: 100%; /* Ensure full width for proper centering */
+    line-height: 1.2;
+}
+
 .research {
 	list-style: square;
+	text-align: left;
 	color: rgb(160, 160, 255);
 }
 
@@ -129,3 +159,18 @@ figcaption {
         margin-top: 50px;
 }
 
+.back-to-top {
+                display: block;
+                text-align: right;
+                margin-top: 20px;
+                margin-bottom: 30px;
+                font-size: 0.9em;
+}
+
+.back-to-top a {
+                text-decoration: none;
+}
+
+.back-to-top a:hover {
+                text-decoration: underline;
+}
