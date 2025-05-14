@@ -40,6 +40,10 @@ li {
 	margin: 15px 0;
 }
 
+li code {
+	font-size: inherit;
+}
+
 ul, ol {
 	padding-left: 2em;
 	margin-left: 0;

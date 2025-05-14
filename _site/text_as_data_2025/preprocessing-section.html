@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+	<title>Teaching</title>
+	<link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400" rel="stylesheet">
+        <!-- Prism.js for syntax highlighting -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
+    </head>
+    <body>
+	<h1>AYAN-YUE GUPTA</h1>
+        
+	<!-- navigation-->
+        <div class="links">
+            <a href="/index.html">Home</a>
+	    <a href="/research.html">Research</a>
+	    <a href="/teaching.html">Teaching</a>
+	    <a href="/art.html">Art</a>
+	    <a href="/assets/CV.pdf">C.V.</a>
+	</div>
+
+	<!-- content-->
+        <div class="container">
+	    
+            <!-- table of contents -->
+            <div id="top" class="container">
+		<h2 class="contents_title">SESSION 1: Basics of Python and text as data</h2>
+                <h2 class="contents_title">~~~~Table of Contents~~~~</h2>
+                <ul class="contents_table">
+                    <li><a href="#setup">1. Setting up your work environment</a></li>
+                    <li><a href="#first-script">2. Your first script</a></li>
+                    <li><a href="#variables_functions_types">3. Variables, functions, types</a></li>
+                    <li><a href="#organization">4. Keeping code organised</a></li>
+		    <li><a href="#imports">5. Imports</a></li>
+		    <li><a href="#data_examination">6. Examining the data</a></li>
+		    <li><a href="#lists_dicts">7. Lists and dictionaries</a></li>
+       		    <li><a href="#saving_loading">8. Saving and loading with JSON</a></li>
+		    <li><a href="#preprocessing">9. Preprocessing text</a></li>
+		</ul>
+            </div>
+
+	<h2 id="preprocessing">9. Preprocessing text</h2>
+	<p>Text preprocessing is an essential step in any natural language processing pipeline. Raw text typically contains many elements that can interfere with analysis, such as punctuation, capitalization, and common words that don't add much meaning. Let's learn how to preprocess the movie reviews we've been working with.</p>
+
+	<p>First, let's download the necessary NLTK resources for tokenization and stop words:</p>
+	<pre><code class="language-python">import nltk
+nltk.download('movie_reviews')
+nltk.download('punkt')
+nltk.download('stopwords')
+from nltk.corpus import movie_reviews, stopwords
+from nltk.tokenize import word_tokenize
+import json
+import os
+import re
+
+
+def convert_to_dict():
+    # Same as before...
+    sentiment = ['pos', 'neg']
+    d = {}
+    for s in sentiment:
+        file_ids = movie_reviews.fileids(s)
+        for i, file_id in enumerate(file_ids):
+            d[f'{s}_{i}'] = {}
+            d[f'{s}_{i}']['content'] = ' '.join(movie_reviews.words(file_id))
+            d[f'{s}_{i}']['sentiment'] = s
+    
+    return d
+
+
+def preprocess_text(text):
+    """
+    Preprocess text by applying several cleaning steps:
+    1. Convert to lowercase
+    2. Tokenize
+    3. Remove punctuation and numbers
+    4. Remove stop words
+    """
+    # Convert to lowercase
+    text = text.lower()
+    
+    # Tokenize
+    # First, let's see what basic split() does
+    basic_tokens = text.split()
+    
+    # Now, let's use NLTK's word_tokenize
+    tokens = word_tokenize(text)
+    
+    # Remove punctuation and numbers
+    # We'll use a regular expression to keep only alphabetic characters
+    tokens = [re.sub(r'[^a-z]', '', token) for token in tokens]
+    
+    # Remove empty strings that might result from the previous step
+    tokens = [token for token in tokens if token]
+    
+    # Remove stop words
+    stop_words = set(stopwords.words('english'))
+    tokens = [token for token in tokens if token not in stop_words]
+    
+    return tokens
+
+
+def main():
+    # Load our dictionary of movie reviews
+    save_dir = 'C:\\Users\\YourUsername\\Documents\\Projects\\my_python_project\\data'
+    with open(f'{save_dir}\\data.json', 'r') as f:
+        reviews_dict = json.load(f)
+    
+    # Select a review to preprocess
+    review_id = 'pos_0'  # First positive review
+    review_text = reviews_dict[review_id]['content']
+    
+    # Show original text
+    print("Original text (first 100 characters):")
+    print(review_text[:100])
+    print()
+    
+    # Basic tokenization with split()
+    basic_tokens = review_text.lower().split()
+    print("Basic tokenization with split() (first 10 tokens):")
+    print(basic_tokens[:10])
+    print()
+    
+    # Advanced preprocessing
+    processed_tokens = preprocess_text(review_text)
+    print("After full preprocessing (first 10 tokens):")
+    print(processed_tokens[:10])
+    print()
+    
+    # Count tokens before and after preprocessing
+    print(f"Token count - Before: {len(review_text.split())}, After: {len(processed_tokens)}")
+    print(f"Reduction: {len(review_text.split()) - len(processed_tokens)} tokens removed")
+
+
+if __name__ == '__main__':
+    main()</code></pre>
+
+	<p>Let's walk through the preprocessing steps in our <code>preprocess_text()</code> function:</p>
+
+	<ul class="research">
+	    <li><strong>Step 1: Lowercase conversion</strong> - By converting all text to lowercase, we ensure that words like "The" and "the" are treated as the same token. This helps reduce the dimensionality of our data.</li>
+	    <li><strong>Step 2: Tokenization</strong> - We start by showing a basic tokenization using Python's built-in <code>split()</code> method, which simply divides text at whitespace. Then we use NLTK's <code>word_tokenize()</code>, which is more sophisticated and properly handles punctuation separation.</li>
+	    <li><strong>Step 3: Removing punctuation and numbers</strong> - We use a regular expression to keep only alphabetic characters (a-z). The <code>re.sub()</code> function replaces any character that's not a lowercase letter with an empty string.</li>
+	    <li><strong>Step 4: Removing empty strings</strong> - After removing punctuation, some tokens might be empty (for example, if the original token was just "!" or "."). We filter these out.</li>
+	    <li><strong>Step 5: Stop word removal</strong> - Stop words are common words like "the", "and", "is" that appear frequently but carry little meaning for analysis. Removing them reduces noise and focuses our analysis on more meaningful content words.</li>
+	</ul>
+
+	<p>Running this script allows us to see how each preprocessing step transforms our text. The final list of tokens contains only meaningful, lowercase, alphabetic words with no punctuation or stop words. This kind of preprocessing is vital for many NLP tasks like sentiment analysis, topic modeling, and text classification.</p>
+
+	<p>In more advanced text preprocessing, you might also want to consider:</p>
+	<ul class="research">
+	    <li><strong>Stemming</strong> - Reducing words to their root form (e.g., "running", "runs", "ran" all become "run")</li>
+	    <li><strong>Lemmatization</strong> - Similar to stemming but ensures the root form is a valid word</li>
+	    <li><strong>N-gram generation</strong> - Creating pairs or triplets of adjacent words to capture phrases</li>
+	    <li><strong>Part-of-speech tagging</strong> - Labeling words as nouns, verbs, adjectives, etc.</li>
+	</ul>
+
+	<p>These techniques would require additional NLTK downloads and more complex code, but they build upon the foundation we've established here.</p>
+	<div class="back-to-top"><a href="#top">↑ Back to top</a></div>
+
+
+       	</div> 
+
+	<!-- links -->
+	<div class="links">
+	    <a href="https://github.com/ayanyuegupta">github</a>
+	    <a href="https://www.instagram.com/ayanyuegupta/">instagram</a>
+	    <a href="https://www.youtube.com/channel/UClNL5hp3ENN-B0owGvb4dpw">youtube</a>
+	</div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    </body>
+</html>

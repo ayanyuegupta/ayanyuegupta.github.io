@@ -24,21 +24,25 @@
 	    
             <!-- table of contents -->
             <div id="top" class="container">
-                <h2 class="contents_title">~ ~ ~ ~ Table of Contents ~ ~ ~ ~</h2>
+		<h2 class="contents_title">SESSION 1: Basics of Python and text as data</h2>
+                <h2 class="contents_title">~~~~Table of Contents~~~~</h2>
                 <ul class="contents_table">
                     <li><a href="#setup">1. Setting up your work environment</a></li>
                     <li><a href="#first-script">2. Your first script</a></li>
-                    <li><a href="#basics">3. Basics: variables, functions, types</a></li>
+                    <li><a href="#variables_functions_types">3. Variables, functions, types</a></li>
                     <li><a href="#organization">4. Keeping code organised</a></li>
 		    <li><a href="#imports">5. Imports</a></li>
 		    <li><a href="#data_examination">6. Examining the data</a></li>
-		    <li><a href="#data_structures">7. Structuring the data</a></li>
-                </ul>
+		    <li><a href="#lists_dicts">7. Lists and dictionaries</a></li>
+       		    <li><a href="#saving_loading">8. Saving and loading with JSON</a></li>
+		    <li><a href="#preprocessing">9. Preprocessing text</a></li>
+		</ul>
             </div>
 
 
         <h2 id="setup">1. Setting up your work environment</h2>
-        <p>Hello everyone. The first thing to do when getting started with coding in Python is to understand how everything is set up. There are lots of options for integrated development environments and notebooks one can use, but before exploring those options, one should know the most basic set up possible, for which you need just 2 things:</p>
+	<p>Hello everyone. This session covers the basics of Python and text preprocessing. A github repository containing the code used for this session can be found <a href="https://github.com/ayanyuegupta/text-as-data-2025">here</a>.</p>
+	<p>The first thing to do when getting started with coding in Python is to understand how everything is set up. There are lots of options for integrated development environments and notebooks one can use, but before exploring those options, one should know the most basic set up possible, for which you need just 2 things:</p>
 	<ul class="research">
 	    <li>Text editor</li>
 	    <li>Command line</li>
@@ -75,7 +79,7 @@ env1\Scripts\activate</code></pre>
         <div class="back-to-top"><a href="#top">↑ Back to top</a></div>
 	   
 
-	<h2 id="basics">3. Basics: variables, functions, types</h2> 
+	<h2 id="variables_functions_types">3. Variables, functions, types</h2> 
         <p>If we want to make scripts that can do a bit more than just print text, we need to make sure our code is organised so that:</p>
         <ul class="research">
             <li>Code is legible, meaning we aren't spending 10 minutes every time we need to find some section of code that needs editing.</li>
@@ -169,112 +173,300 @@ def main():
 
 if __name__ == '__main__:
     main()</code></pre>
-	<p>We will be using a movie review dataset downloadable from <code>nltk</code> to learn text preprocessing. With <code>nltk</code>, we sometimes need to download additional resources to import <code>nltk</code> packages that don't come with the initial <code>nltk</code> installation. We can use the <code>nltk.download()</code> function to download these additional resources. We will use this function to download the resources needed to import the 'movie_reviews' dataset:</p>
+	<p>We will be using the Gutenberg dataset from <code>nltk</code> to learn text preprocessing. With <code>nltk</code>, we sometimes need to download additional resources to import <code>nltk</code> packages that don't come with the initial <code>nltk</code> installation. We can use the <code>nltk.download()</code> function to download these additional resources. We will use this function to download the resources needed to import the Gutenberg dataset:</p>
         <pre><code class="language-python">import nltk
-nltk.download('movie_reviews')
-from nltk.corpus import movie_reviews
+nltk.download('gutenberg')
+from nltk.corpus import gutenberg
 
 def main():
     
     pass ####placeholder -- we can remove this when we start adding stuff to main()
 
 
-if __name__ == '__main__:
+if __name__ == '__main__':
     main()</code></pre>
-	<p>When we use <code>from nltk.corpus import movie_reviews</code>, we're using a more specific import syntax that lets us import just one particular component from a package. This differs from <code>import nltk</code>, which imports the entire package. The advantage of using <code>from x import y</code> is that we can directly use the imported component without having to prefix it with the package name. So, we can now write <code>movie_reviews</code> instead of having to prefix with <code>nltk.corpus</code> all the time: <code>nltk.corpus.movie_reviews</code>. This keeps our code concise.</p>
+	<p>When we use <code>from nltk.corpus import gutenberg</code>, we're using a more specific import syntax that lets us import just one particular component from a package. This differs from <code>import nltk</code>, which imports the entire package. The advantage of using <code>from x import y</code> is that we can directly use the imported component without having to prefix it with the package name. So, we can now write <code>gutenberg</code> instead of having to prefix with <code>nltk.corpus</code> all the time: <code>nltk.corpus.gutenberg</code>. This keeps our code concise.</p>
         <div class="back-to-top"><a href="#top">↑ Back to top</a></div>
 
 
        <h2 id="data_examination">6. Examining the data</h2>
-	<p>So we've managed to import some movie review data to practise preprocessing. But we have no concrete understanding of the data. What does it look like? The movie_reviews dataset is stored as a <i>class</i>. We will not go into the details of classes now -- if we have time, we will go through them in one of the other 2 sessions. For now, it is enough to say that a class is a way of bundling together a collection of related functions. These functions are known as the <i>methods</i> of a class. So, the data of movie_reviews is accessible through movie_reviews' methods. Let's print the output of some of these methods to see what's going on:</p>
+       <p>So we've managed to import some classic literary texts from the Gutenberg dataset to practise preprocessing. But we have no concrete understanding of the data. What does it look like? The Gutenberg dataset is stored as a <i>class</i>. We will not go into the details of classes now -- if we have time, we will go through them in one of the other 2 sessions. For now, it is enough to say that a class is a way of bundling together a collection of related functions. These functions are known as the <i>methods</i> of a class.</p>
+       <p>So, Gutenberg texts are stored in the class <code>gutenberg</code>, and we can access this data through the methods of <code>gutenberg</code>. One of these methods is <code>.fileids()</code>, which returns a list of all available texts in the Gutenberg corpus. Let's print the output of this method to see what's available:</p>
         <pre><code class="language-python">import nltk
-nltk.download('movie_reviews')
-from nltk.corpus import movie_reviews
+nltk.download('gutenberg')
+from nltk.corpus import gutenberg
 
 def main():
     
-    print(movie_reviews.fileids('pos'))
-    print(movie_reviews.fileids('neg'))
+    print(gutenberg.fileids())
 
-if __name__ == '__main__:
+if __name__ == '__main__':
     main()</code></pre>
-	<p>As you can see, we get a long list of strings, where each string is some kind of file path. Let's write a loop and use movie_reviews' <code>.words()</code> method to see what's inside these files:</p>
+	<p>As you can see, we get a list of filenames representing classic texts like 'austen-emma.txt', 'shakespeare-macbeth.txt', and 'melville-moby_dick.txt'. Let's examine these texts in more detail by writing a <i>for loop</i> and using the the <code>.raw()</code> method:</p>
         <pre><code class="language-python">import nltk
-nltk.download('movie_reviews')
-from nltk.corpus import movie_reviews
+nltk.download('gutenberg')
+from nltk.corpus import gutenberg
 
 def main():
     
-#    print(movie_reviews.fileids('pos'))
-#    print(movie_reviews.fileids('neg'))
-    file_ids = movie_reviews.fileids('pos') + movie_reviews.fileids('neg')
-    for file_id in file_ids:
-        print(movie_reviews.words(file_id))
+#    print(gutenberg.fileids())
+    for file_id in gutenberg.fileids():
+        print('####')
+        print(gutenberg.raw(file_id)[:100]
     
-if __name__ == '__main__:
+if __name__ == '__main__':
     main()</code></pre>
-        <p>You'll notice that I've added some lines starting with <code>#</code> at the beginning of the main function in the code above. The <code>#</code> symbol is how we create comments in Python. Any text that follows a <code>#</code> on a line is ignored by Python when running the script. Comments are useful for temporarily disabling code without deleting it (as I've done with our previous print statements)and leaving notes for yourself or other programmers who might read your code later.</p>
-	<p>Running this code prints out the contents of each file as a list of words. Just by using some print statements and loops, we can get more of a feel of how the movie_reviews dataset is organised in terms of file ids that can be used with movie_reviews' methods to get the dataset's contents. This process of getting to grips with the structure and contents of a dataset by basically using loops and print statements is an important part of getting a concrete, intuitive picture of what's going on.</p>
-        <div class="back-to-top"><a href="#top">↑ Back to top</a></div>
+	<p>With this for loop, we iterate through each filename in <code>gutenberg.fileids()</code>, and print the result of inputting each filename into the <code>gutenberg.raw()</code> method. We only print the first 100 characters of each result to keep things legible using <i>slicing</i>, which we will cover in the next section. We also print '####' at each iteration so we can see where one iteration ends and another begins more clearly.</p> 
+	<p>For loops are essential in Python, and allow you to perform operations on every element of any kind of data structure automatically, as opposed to, for example, manually typing out a print statement for every filename in <code>gutenberg.fileids()</code>.</p>
+        <p>This process of essentially using print statements and loops to see the contents of a dataset is an important step that enables one to get a more intuitive understanding of the overall structure of contents of a dataset.</p>
+        <p>You'll notice that I've added <code>#</code> at the beginning of one of the lines the main function in the code above. The <code>#</code> symbol is how we create comments in Python. Any text that follows a <code>#</code> on a line is ignored by Python when running the script. Comments are useful for temporarily disabling code without deleting it and leaving notes for yourself or other programmers who might read your code later. I'll be commenting out code we have already gone through and is no longer needed.</p>
+	<div class="back-to-top"><a href="#top">↑ Back to top</a></div>
 
 
-        <h2 id="data_structures">7. Structuring the data</h2>
-	<p>Through the previous section, we have gained some familiarity with lists. We can tell a value is a list by looking at its brackets -- if it is enclosed with square brackets <code>[]</code>, it is a list. We can use <i>slicing and indexing</i> to look at parts of lists. For example, we can modify the our loop printing the contents of the movie_reviews dataset to only print the first 5 words of each review:
+        <h2 id="lists_dicts">7. Lists and dictionaries</h2>
+	<p>Through the previous section, we have gained some familiarity with lists. We can tell a value is a list by looking at its brackets -- if it is enclosed with square brackets <code>[]</code>, it is a list. We can use <i>slicing and indexing</i> to look at parts of lists. For example, we can modify our code printing the filenames of the Gutenberg dataset so that <code>gutenberg.fileids()</code> only prints the first 3 filenames:</p>
         <pre><code class="language-python">import nltk
-nltk.download('movie_reviews')
-from nltk.corpus import movie_reviews
+nltk.download('gutenberg')
+from nltk.corpus import gutenberg
 
 def main():
     
-#    print(movie_reviews.fileids('pos'))
-#    print(movie_reviews.fileids('neg'))
-    file_ids = movie_reviews.fileids('pos') + movie_reviews.fileids('neg')
-    for file_id in file_ids:
-        print(movie_reviews.words(file_id)[:5])
+    print(gutenberg.fileids()[:3])
     
-if __name__ == '__main__:
+if __name__ == '__main__':
     main()</code></pre>
-
-	<p>If we just wanted the first element:</p>
-	<pre><code class="language-python">for file_id in file_ids:
-    print(movie_reviews.words(file_id)[0]</code></pre>
-	<p>Or the last element:</p>
-	<pre><code class="language-python">for file_id in file_ids:
-    print(movie_reviews.words(file_id)[-1]</code></pre>
-	<p>The other basic data structure you ought to be familiar with is the dictionary, which are enclosed by curly bracks <code>{}</code> and are organised in terms of key value pairs. Let's write a function converting movie_reviews data into a dictionary to understand what this means:</p>
+	<p>Let's go through some examples to understand the logic of indexing and slicing:</p>
+	<ul class="research">
+		<li><code>my_list[0]</code>: Access the first element (indexing starts at 0)</li>
+		<li><code>my_list[-1]</code>: Access the last element</li>
+		<li><code>my_list[2:5]</code>: Get elements from index 2 up to (but not including) index 5</li>
+		<li><code>my_list[:3]</code>: Get first three elements</li>
+		<li><code>my_list[3:]</code>: Get all elements from index 3 to the end</li>
+	</ul>
+	<p>This slicing syntax works on other sequence types too, like strings:</p>
+	<pre><code class="language-python">sentence = "Python is amazing"
+print(sentence[0])     # 'P'
+print(sentence[:6])    # 'Python'
+print(sentence[10:])   # 'amazing'</code></pre>
+	<p>The other basic data structure you ought to be familiar with is the dictionary, which are enclosed by curly bracks <code>{}</code> and are organised in terms of key value pairs. Let's write a function converting Gutenberg data into a dictionary to understand what this means:</p>
 	<pre><code class="language-python">import nltk
-nltk.download('movie_reviews')
-from nltk.corpus import movie_reviews
+nltk.download('gutenberg')
+from nltk.corpus import gutenberg
 
 
 def convert_to_dict():
 
-    sentiment = ['pos', 'neg']
     d = {}
-    for s in sentiment:
-        file_ids = movie_reviews.fileids(s)
-	for i, file_id in enumerate(file_ids):
-	    d[f'{s}_{i}'] = {}
-	    d[f'{s}_{i}']['content'] = ' '.join(movie_reviews.words(file_id))
-	    d[f'{s}_{i}']['sentiment'] = s
+    for file_id in gutenberg.fileids():
+        d[file_id] = {}
+        d[file_id]['title'] = file_id
+        d[file_id]['content'] = gutenberg.raw(file_id)
+        d[file_id]['word_count'] = len(gutenberg.words(file_id))
     
     return d
 
 
 def main():
-	    
-#    print(movie_reviews.fileids('pos'))
-#    print(movie_reviews.fileids('neg'))
-#    file_ids = movie_reviews.fileids('pos') + movie_reviews.fileids('neg')
-#    for file_id in file_ids:
-#        print(movie_reviews.words(file_id)) 
+
+#    print(gutenberg.fileids())
+#    for file_id in gutenberg.fileids():
+#        print('####')
+#        print(gutenberg.raw(file_id)[:100]
+
     d = convert_to_dict()
-    print(d['neg_0'])
+    print(d['austen-emma.txt'])
 
 
 if __name__ == '__main__':
     main()</code></pre>
-	
+        <p>Let's go over what this function is doing. First, we create an empty dictionary <code>d = {}</code> that we'll populate with our Gutenberg data.</p>
+        <p>We then iterate through each file ID in the Gutenberg corpus. For each text, we create a nested dictionary structure with several pieces of information:</p>
+        <pre><code class="language-python">d[file_id] = {} # initialise empty dict for each file
+d[file_id]['title'] = file_id  # file title
+d[file_id]['content'] = gutenberg.raw(file_id)  # store the full text
+d[file_id]['word_count'] = len(gutenberg.words(file_id))   # count words</code></pre>
+        <p>The <code>' '.join(gutenberg.words(file_id))</code> part combines all the words in the text with spaces between them, converting the list of words into a single string.</p>
+        <p>If you print <code>d['austen-emma.txt']</code> in the main function, you'll be able to see the structured information we have stored in d for 'Emma'.</p>
+	<p>The string ID <code>'austen-emma.txt'</code> we enter into the square brackets of <code>d['austen-emma.txt']</code> is the <i>key</i> of this dictionary, and what is returned by <code>d['austen-emma.txt']</code> is the <i>value</i> of the dictionary. In this case our value is another, second dictionary, the values of which we can access using the second dictionary's keys:</p>
+	<pre><code class="language-python">print(d['austen-emma.txt']['title'])
+print(d['austen-emma.txt']['word_count'])</code></pre>
+        <p>A couple of things to remember about dictionaries:</p>
+        <ul class="research">
+            <li>Keys must be unique within a dictionary</li>
+            <li>Dictionaries are unordered (though in newer Python versions, insertion order is preserved)</li>
+        </ul>  
+	<div class="back-to-top"><a href="#top">↑ Back to top</a></div>
+
+
+	<h2 id="saving_loading">8. Saving and loading with JSON</h2>
+	<p>Dictionaries are a very common way of storing text data, especially if you are working with APIs and web scraping, so it is very important to get familiar with them. An important part of using them is saving them to and loading them from your computer's storage. The standard way of doing this is using the JSON file format, which is designed for storing dictionaries and lists. The advantage of JSON is that it is used across many programming languages, so you don't have to worry about compatibility when sharing data in JSON format.</p>
+	<p>The package necessary for saving and loading with JSON comes preinstalled with Python, so we can just import it without having to install it first with <code>pip</code>. Let us modify our <code>preprocessing</code> script to save and load the dictionary of Gutenberg texts we just created:</p>
+        <pre><code class="language-python">import nltk
+nltk.download('gutenberg')
+from nltk.corpus import gutenberg
+import json
+import os
+
+
+def convert_to_dict():
+
+    d = {}
+    for file_id in gutenberg.fileids():
+        d[file_id] = {}
+        d[file_id]['title'] = file_id
+        d[file_id]['content'] = gutenberg.raw(file_id)
+        d[file_id]['word_count'] = len(gutenberg.words(file_id))
+    
+    return d
+
+
+def main():
+
+#    print(gutenberg.fileids())
+#    for file_id in gutenberg.fileids():
+#        print('####')
+#        print(gutenberg.raw(file_id)[:100]
+    
+    d = convert_to_dict()
+#    print(d['austen-emma.txt'])
+
+    #### create save directory
+    save_dir = 'C:\Users\YourUsername\Documents\Projects\my_python_project\data'
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+    #### save d as JSON file in save_dir
+    with open(f'{save_dir}\gutenberg_data.json', 'w') as f:
+        json.dump(d, f)
+    #### load d from JSON file we just created
+    with open(f'{save_dir}\gutenberg_data.json', 'r') as f:
+        d = json.load(f)
+
+
+if __name__ == '__main__':
+    main()</code></pre>
+	<p>Let's go through the modifications:</p>
+	<ul class="research">
+	    <li>First, we import two new packages, <code>os</code> and <code>json</code>. The package <code>os</code> provides useful functions for creating and managing directories we can use to decide where to save our dictionary, while <code>json</code> allows us to store Python objects as JSON objects.</li>
+	    <li>We decide where we want to save our dictionary by creating the string variable <code>save_dir</code>.</li>
+	    <li>As yet, <code>save_dir</code> does not actually exist as a directory, so we have to create it. We do this by first checking if there is a directory of the path of <code>save_dir</code> with the function <code>os.path.exists()</code>, and if there isn't, we create a directory of that path with <code>os.makedirs()</code>.</li>
+	    <li>This is an example of an <i>if block</i>. The basic syntax here is <code>if condition:</code> followed by indented code on the next line. If <code>condition</code> returns the boolean value <code>False</code>, the next line's indented code will not run. If <code>condition</code> returns the value <code>True</code>, the next line's code will run.</li>
+	    <li>We then save our dictionary, and then reload it, using <code>json.dump()</code> and <code>json.load()</code>. We use these functions within the <code>with open() as f</code> blocks so that we do not have to think about closing the file when we are done saving/loading. If saving/loading is done within these blocks, closing files is handled automatically.</li>
+	    <li>When we use the <code>with open() as f</code> blocks, we are temporarily storing the opened file as the variable <code>f</code>, which we can then use as arguments for <code>json.dump()</code> and <code>json.load()</code> to specify we are saving or loading to the file pointed to by the variable <code>f</code>.</li>
+	    <li>When using <code>open()</code>, be very careful to use the correct write and read flags, or you risk wiping your saved data. Whenever you want to open a file, you use the read flag <code>'r'</code>, e.g. <code>open(file_path, 'r')</code>. Whenever you want to save a file, you use the write flag <code>'w'</code>, e.g. <code>open(file_path, 'w')</code>.</li>
+	</ul>
+
+
+	<h2 id="preprocessing">9. Preprocessing text</h2>
+	<p>Hopefully you now feel a bit more comfortable with the basics of Python. We have not covered the basics exhaustively, but we have covered enough to start thinking about working with text data.</p>
+	<p>An essential part of working with text data is preprocessing, which refers to all the ways text might need to be prepared before analysing it. Some methods of analysis only require minimal preprocessing -- others will require a lot. </p>
+	<p>Let's go through some of the basics of preprocessing using the Gutenberg dataset.</p>
+	<p>Let's download and import some additional <code>nltk</code> resources and then write a preprocessing function that covers some common preprocessing procedures:</p>
+	<pre><code class="language-python">import nltk
+nltk.download('gutenberg')
+nltk.download('punkt')
+nltk.download('stopwords')
+from nltk.corpus import gutenberg, stopwords
+from nltk.tokenize import word_tokenize
+import json
+import os
+import re
+
+
+def convert_to_dict():
+    
+    d = {}
+    for file_id in gutenberg.fileids():
+        d[file_id] = {}
+        d[file_id]['title'] = file_id
+        d[file_id]['content'] = gutenberg.raw(file_id))
+        d[file_id]['word_count'] = len(gutenberg.words(file_id))
+    
+    return d
+
+
+def preprocess_text(text):
+    
+    #### Preprocess text by applying several cleaning steps:
+    #### 1. Convert to lowercase
+    #### 2. Tokenize
+    #### 3. Remove punctuation and numbers
+    #### 4. Remove stop words
+   
+    #### convert to lowercase
+    text = text.lower()
+    
+    #### tokenize
+    #### first, let's see what basic split() does
+    basic_tokens = text.split()
+    
+    #### now, let's use NLTK's word_tokenize
+    tokens = word_tokenize(text)
+    
+    #### remove punctuation and numbers
+    #### we'll use a regular expression to keep only alphabetic characters
+    cleaned = []
+    for token in tokens:
+        cleaned.append(re.sub(r'[^a-z]', '', token)
+    tokens = cleaned
+
+    #### remove empty strings that might result from the previous step
+    cleaned = []
+    for token in tokens:
+        if token:
+	    cleaned.append(token)
+    tokens = tokens
+    
+    #### remove stop words
+    stop_words = set(stopwords.words('english'))
+    cleaned = []
+    for token in tokens:
+        if token not in stop_words:
+	    cleaned.append(token)
+    
+    return tokens
+
+
+def main():
+
+#    print(gutenberg.fileids())
+#    for file_id in gutenberg.fileids():
+#        print('####')
+#        print(gutenberg.raw(file_id)[:100]
+
+    d = convert_to_dict()
+#    print(d['austen-emma.txt'])
+
+    #### create save directory
+    save_dir = 'C:\Users\YourUsername\Documents\Projects\my_python_project\data'
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+    #### save d as JSON file in save_dir
+    with open(f'{save_dir}\gutenberg_data.json', 'w') as f:
+        json.dump(d, f)
+    #### load d from JSON file we just created
+    with open(f'{save_dir}\gutenberg_data.json', 'r') as f:
+        d = json.load(f)
+    
+    #### select a text to preprocess
+    text_id = 'shakespeare-macbeth.txt'  # Macbeth by Shakespeare
+    text_content = d[text_id]['content']
+    
+    #### preprocess with our function
+    tokens = preprocess_text(text_content)
+
+
+if __name__ == '__main__':
+    main()</code></pre>
+
+	<p>Let's walk through the preprocessing steps in our <code>preprocess_text()</code> function:</p>
+
+	<ul class="research">
+	    <li><strong>Step 1: Lowercase conversion</strong> - By converting all text to lowercase, we ensure that words like "The" and "the" are treated as the same token. This helps reduce the dimensionality of our data.</li>
+	    <li><strong>Step 2: Tokenization</strong> - We start by showing a basic tokenization using Python's built-in <code>split()</code> method, which simply divides text at whitespace. Then we use NLTK's <code>word_tokenize()</code>, which is more sophisticated and properly handles punctuation separation.</li>
+	    <li><strong>Step 3: Removing punctuation and numbers</strong> - We use a regular expression to keep only alphabetic characters (a-z). The <code>re.sub()</code> function replaces any character that's not a lowercase letter with an empty string.</li>
+	    <li><strong>Step 4: Removing empty strings</strong> - After removing punctuation, some tokens might be empty (for example, if the original token was just "!" or "."). We filter these out.</li>
+	    <li><strong>Step 5: Stop word removal</strong> - Stop words are common words like "the", "and", "is" that appear frequently but carry little meaning for analysis. Removing them reduces noise and focuses our analysis on more meaningful content words.</li>
+	</ul>
 	<div class="back-to-top"><a href="#top">↑ Back to top</a></div>
 
        	</div> 
