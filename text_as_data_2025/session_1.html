@@ -413,7 +413,7 @@ def preprocess_text(text):
     cleaned = []
     for token in tokens:
         if token:
-	    cleaned.append(token)
+            cleaned.append(token)
     tokens = tokens
     
     #### remove stop words
@@ -421,7 +421,7 @@ def preprocess_text(text):
     cleaned = []
     for token in tokens:
         if token not in stop_words:
-	    cleaned.append(token)
+            cleaned.append(token)
     
     return tokens
 
