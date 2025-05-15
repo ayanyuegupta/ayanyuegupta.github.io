@@ -42,13 +42,14 @@
 
         <h2 id="setup">1. Setting up your work environment</h2>
 	<p>Hello everyone. This session covers the basics of Python and text preprocessing. A github repository containing the code used for this session can be found <a href="https://github.com/ayanyuegupta/text-as-data-2025">here</a>.</p>
-	<p>The first thing to do when getting started with coding in Python is to understand how everything is set up. There are lots of options for integrated development environments and notebooks one can use, but before exploring those options, one should know the most basic set up possible, for which you need just 2 things:</p>
+	<p>The first thing to do when getting started with coding in Python is to understand how the work environment -- the tools used for coding and running scripts -- is set up. There are lots of options for such tools, e.g. integrated development environments, notebooks, but before exploring those options, one should know the most basic set up possible, for which you need just 2 things:</p>
 	<ul class="research">
 	    <li>Text editor</li>
 	    <li>Command line</li>
         </ul>
 	<p>We'll be using this minimal set up for the rest of my sessions.</p>
-        <p>Now, if you've followed the setup for this session, you should already have Python installed and have selected a text editor. The next thing to do is to set up a virtual environment. Knowing how to manage virtual environments is useful because dealing with multiple Python projects can get messy. One project might require an older version of a particular programme, while another project you are working might require a newer version of the same programme. Instead of upgrading/reverting programme versions everytime you want to work on different Python projects, virtual environments lets you work with different versions of required programmes simultaneously.</p>
+	<p>Now, if you've followed the setup for this session, you should already have Python installed and have selected a text editor. The next thing to do is to set up a virtual environment. Knowing how to manage virtual environments is useful because dealing with multiple Python projects can get messy.</p>
+	<p>One project might require an older version of a particular programme, while another project you are working on might require a newer version of the same programme. Instead of upgrading/reverting programme versions everytime you want to work on different Python projects, virtual environments lets you work with different versions of programmes simultaneously.</p>
 	<p>To set up a virtual environment, follow these steps:</p>
         <ul class="research">
 	    <li>(1) Choose or create a folder where you want your virtual environment to be. For example, you might choose or create the folder in the location <code>C:\Users\YourUsername\Documents\Projects\my_python_project</code></li>
@@ -57,7 +58,7 @@
         </ul>
 	<p>You now have a virtual environment called <code>env1</code> in the folder you selected/created in (1). You should get into the habit of navigating to the directory of your environment and activating it whenever you want to work on a Python project with the following commands:</p>
         <pre><code class="language-bash">#### navigate to the directory containing your virtual environment
-cd \Users\YourUsername\Documents\Projects\your_python_project
+cd C:\Users\YourUsername\Documents\Projects\your_python_project
 
 #### activate your virtual environment
 #### Mac/Linux
@@ -90,7 +91,7 @@ env1\Scripts\activate</code></pre>
         <pre><code class="language-python">def greetings(name, country):
     
     print(f'Hello, my name is {name} and I am from {country}.')</code></pre>
-	<p>Here, we give the name and country of our greeting as <i>arguments</i>. Now, whenever we want our script to introduce a different person, instead of repeatedly typing out variations of the greeting, we can simply call the function with different arguments:</p>
+	<p>Here, we give the name and country of our greeting as <i>arguments</i>, i.e. as inputs to the function. Now, whenever we want our script to introduce a different person, instead of repeatedly typing out variations of the greeting, we can simply call the function with different arguments:</p>
         <pre><code class="language-python">greetings('John', 'Great Britain')
 greetings('Monica', 'Italy')</code></pre>
         <p>Note the formatting used to define the function. After the first line defining function arguments, the rest of the function is indented 4 spaces to the right. Remember this indentation format -- whenever one indents in Python, one indents with 4 spaces.</p>
@@ -212,7 +213,7 @@ def main():
 #    print(gutenberg.fileids())
     for file_id in gutenberg.fileids():
         print('####')
-        print(gutenberg.raw(file_id)[:100]
+        print(gutenberg.raw(file_id)[:100])
     
 if __name__ == '__main__':
     main()</code></pre>
@@ -248,7 +249,7 @@ if __name__ == '__main__':
 print(sentence[0])     # 'P'
 print(sentence[:6])    # 'Python'
 print(sentence[10:])   # 'amazing'</code></pre>
-	<p>The other basic data structure you ought to be familiar with is the dictionary, which are enclosed by curly bracks <code>{}</code> and are organised in terms of key value pairs. Let's write a function converting Gutenberg data into a dictionary to understand what this means:</p>
+	<p>The other basic data structure you ought to be familiar with is the dictionary, which are enclosed by curly brackets <code>{}</code> and are organised in terms of key value pairs. Let's write a function converting Gutenberg data into a dictionary to understand what this means:</p>
 	<pre><code class="language-python">import nltk
 nltk.download('gutenberg')
 from nltk.corpus import gutenberg
@@ -261,7 +262,7 @@ def convert_to_dict():
         d[file_id] = {}
         d[file_id]['title'] = file_id
         d[file_id]['content'] = gutenberg.raw(file_id)
-        d[file_id]['word_count'] = len(gutenberg.words(file_id)
+        d[file_id]['word_count'] = len(gutenberg.words(file_id))
     
     return d
 
@@ -285,21 +286,20 @@ if __name__ == '__main__':
 d[file_id]['title'] = file_id  # file title
 d[file_id]['content'] = gutenberg.raw(file_id)  # store the full text
 d[file_id]['word_count'] = len(gutenberg.words(file_id))   # count words</code></pre>
-        <p>The <code>' '.join(gutenberg.words(file_id))</code> part combines all the words in the text with spaces between them, converting the list of words into a single string.</p>
         <p>If you print <code>d['austen-emma.txt']</code> in the main function, you'll be able to see the structured information we have stored in d for 'Emma'.</p>
-	<p>The string ID <code>'austen-emma.txt'</code> we enter into the square brackets of <code>d['austen-emma.txt']</code> is the <i>key</i> of this dictionary, and what is returned by <code>d['austen-emma.txt']</code> is the <i>value</i> of the dictionary. In this case our value is another, second dictionary, the values of which we can access using the second dictionary's keys:</p>
+	<p>The string ID <code>'austen-emma.txt'</code> we enter into the square brackets of <code>d['austen-emma.txt']</code> is the <i>key</i> of this dictionary, and what is returned by <code>d['austen-emma.txt']</code> is the <i>value</i> of the dictionary. In this case our value is another, second dictionary (hence it's structure is 'nested'), the values of which we can access using the second dictionary's keys:</p>
 	<pre><code class="language-python">print(d['austen-emma.txt']['title'])
 print(d['austen-emma.txt']['word_count'])</code></pre>
         <p>A couple of things to remember about dictionaries:</p>
         <ul class="research">
-            <li>Keys must be unique within a dictionary</li>
-            <li>Dictionaries are unordered (though in newer Python versions, insertion order is preserved)</li>
+            <li>Keys must be unique within a dictionary.</li>
+            <li>Dictionaries are unordered (though in newer Python versions, insertion order is preserved), meaning dictionary values are not indexed like in lists. You can only access values via their keys.</li>
         </ul>  
 	<div class="back-to-top"><a href="#top">↑ Back to top</a></div>
 
 
 	<h2 id="saving_loading">8. Saving and loading with JSON</h2>
-	<p>Dictionaries are a very common way of storing text data, especially if you are working with APIs and web scraping, so it is very important to get familiar with them. An important part of using them is saving them to and loading them from your computer's storage. The standard way of doing this is using the JSON file format, which is designed for storing dictionaries and lists. The advantage of JSON is that it is used across many programming languages, so you don't have to worry about compatibility when sharing data in JSON format.</p>
+	<p>Dictionaries are a very common way of storing text data, especially if you are working with APIs and web scraping, so it is important to get familiar with them. An important part of using them is saving them to and loading them from your computer's storage. The standard way of doing this is using the JSON file format, which is designed for storing dictionaries and lists. The advantage of JSON is that it is used across many programming languages, so you don't have to worry about compatibility when sharing data in JSON format.</p>
 	<p>The package necessary for saving and loading with JSON comes preinstalled with Python, so we can just import it without having to install it first with <code>pip</code>. Let us modify our <code>preprocessing</code> script to save and load the dictionary of Gutenberg texts we just created:</p>
         <pre><code class="language-python">import nltk
 nltk.download('gutenberg')
@@ -325,20 +325,20 @@ def main():
 #    print(gutenberg.fileids())
 #    for file_id in gutenberg.fileids():
 #        print('####')
-#        print(gutenberg.raw(file_id)[:100]
+#        print(gutenberg.raw(file_id)[:100])
     
     d = convert_to_dict()
 #    print(d['austen-emma.txt'])
 
     #### create save directory
-    save_dir = 'C:\Users\YourUsername\Documents\Projects\my_python_project\data'
+    save_dir = 'C:/Users/YourUsername/Documents/Projects/my_python_project/data'
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
     #### save d as JSON file in save_dir
-    with open(f'{save_dir}\gutenberg_data.json', 'w') as f:
+    with open(f'{save_dir}/gutenberg_data.json', 'w') as f:
         json.dump(d, f)
     #### load d from JSON file we just created
-    with open(f'{save_dir}\gutenberg_data.json', 'r') as f:
+    with open(f'{save_dir}/gutenberg_data.json', 'r') as f:
         d = json.load(f)
 
 
@@ -346,7 +346,7 @@ if __name__ == '__main__':
     main()</code></pre>
 	<p>Let's go through the modifications:</p>
 	<ul class="research">
-	    <li>First, we import two new packages, <code>os</code> and <code>json</code>. The package <code>os</code> provides useful functions for creating and managing directories we can use to decide where to save our dictionary, while <code>json</code> allows us to store Python objects as JSON objects.</li>
+		<li>First, we import two new packages, <code>os</code> and <code>json</code>. The package <code>os</code> provides useful functions for creating and managing directories we can use to decide where to save our dictionary, while <code>json</code> allows us to store Python objects as JSON objects. Like <code>json</code>, <code>os</code> does not need to be installed with <code>pip</code>.</li>
 	    <li>We decide where we want to save our dictionary by creating the string variable <code>save_dir</code>.</li>
 	    <li>As yet, <code>save_dir</code> does not actually exist as a directory, so we have to create it. We do this by first checking if there is a directory of the path of <code>save_dir</code> with the function <code>os.path.exists()</code>, and if there isn't, we create a directory of that path with <code>os.makedirs()</code>.</li>
 	    <li>This is an example of an <i>if block</i>. The basic syntax here is <code>if condition:</code> followed by indented code on the next line. If <code>condition</code> returns the boolean value <code>False</code>, the next line's indented code will not run. If <code>condition</code> returns the value <code>True</code>, the next line's code will run.</li>
@@ -359,8 +359,7 @@ if __name__ == '__main__':
 	<h2 id="preprocessing">9. Preprocessing text</h2>
 	<p>Hopefully you now feel a bit more comfortable with the basics of Python. We have not covered the basics exhaustively, but we have covered enough to start thinking about working with text data.</p>
 	<p>An essential part of working with text data is preprocessing, which refers to all the ways text might need to be prepared before analysing it. Some methods of analysis only require minimal preprocessing -- others will require a lot. </p>
-	<p>Let's go through some of the basics of preprocessing using the Gutenberg dataset.</p>
-	<p>Let's download and import some additional <code>nltk</code> resources and then write a preprocessing function that covers some common preprocessing procedures:</p>
+	<p>Let's go through some of the basics of preprocessing using the Gutenberg dataset. We'll download and import some additional <code>nltk</code> resources and then write a preprocessing function that covers some common preprocessing procedures:</p>
 	<pre><code class="language-python">import nltk
 nltk.download('gutenberg')
 nltk.download('punkt')
@@ -378,7 +377,7 @@ def convert_to_dict():
     for file_id in gutenberg.fileids():
         d[file_id] = {}
         d[file_id]['title'] = file_id
-        d[file_id]['content'] = gutenberg.raw(file_id))
+        d[file_id]['content'] = gutenberg.raw(file_id)
         d[file_id]['word_count'] = len(gutenberg.words(file_id))
     
     return d
@@ -422,7 +421,9 @@ def preprocess_text(text):
     for token in tokens:
         if token not in stop_words:
             cleaned.append(token)
-    
+    tokens = cleaned
+
+
     return tokens
 
 
@@ -431,20 +432,20 @@ def main():
 #    print(gutenberg.fileids())
 #    for file_id in gutenberg.fileids():
 #        print('####')
-#        print(gutenberg.raw(file_id)[:100]
+#        print(gutenberg.raw(file_id)[:100])
 
     d = convert_to_dict()
 #    print(d['austen-emma.txt'])
 
     #### create save directory
-    save_dir = r'C:\Users\YourUsername\Documents\Projects\my_python_project\data'
+    save_dir = 'C:/Users/YourUsername/Documents/Projects/my_python_project/data'
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
     #### save d as JSON file in save_dir
-    with open(f'{save_dir}\gutenberg_data.json', 'w') as f:
+    with open(f'{save_dir}/gutenberg_data.json', 'w') as f:
         json.dump(d, f)
     #### load d from JSON file we just created
-    with open(f'{save_dir}\gutenberg_data.json', 'r') as f:
+    with open(f'{save_dir}/gutenberg_data.json', 'r') as f:
         d = json.load(f)
     
     #### select a text to preprocess
