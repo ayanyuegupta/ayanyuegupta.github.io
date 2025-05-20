@@ -267,7 +267,6 @@ def preprocess(d):
         for doc in text:
             #### remove new lines
             doc = doc.replace('\n', ' ').strip()
-            if len(doc.split()) <= 5: continue
             docs.append(doc)
 
     return docs
