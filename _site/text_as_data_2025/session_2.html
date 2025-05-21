@@ -39,21 +39,23 @@
             </div>
 
 
-	    <h2 id=embeddings>1. Embeddings in Natural Language Processing</h2>
-	    <p>In this second session how embeddings are used in neural approaches to natural language processing (NLP) will be introduced. NLP is an academic discipline that is broadly concerned with producing algorithms that 'do stuff' with language. This might involve making algorithms that aid linguistic analysis, or it might involve making algorithms that allow simulation of conversation.</p>
+	    <h2 id="embeddings">1. Embeddings in Natural Language Processing</h2>
+            <p>In this second session how embeddings are used in neural approaches to natural language processing (NLP) will be introduced. NLP is an academic discipline that is broadly concerned with producing algorithms that 'do stuff' with language. This might involve making algorithms that aid linguistic analysis, or it might involve making algorithms that allow simulation of conversation.</p>
 	    <p>Currently, neural approaches -- that is approaches that make use of neural nets -- are the dominant paradigm in NLP. Neural nets are algorithms that mimic how brain works by having layers of 'neurons', where each neuron is defined by some mathematical function, that repeatedly transforms algorithms' inputs. By 'training' them on data, we can find the neuron parameters that best enable the neural net to perform some desired task. We won't go into how neural nets work here, suffice to say that what is called 'artificial intelligence' today -- ChatGPT, Claude, DeepSeek etc. -- are massive, NLP neural nets designed to simulate conversation.</p>
 	    <p>We will go over two topics: word embeddings and embedding-based topic modelling.</p>
-            
+            <div class="back-to-top"><a href="#top">↑ Back to top</a></div>
+           
 
-	    <h2 id='emb_intro'>2. What are embeddings?</h2>
+	    <h2 id="emb_intro">2. What are embeddings?</h2>
 	    <p>We will learn about how to generate and use word embeddings in Python through Word2Vec. Word2Vec is a small neural network developed by researchers at Google in 2013. Their paper detailing Word2Vec can be found <a href="https://arxiv.org/abs/1301.3781">here</a>. However, before getting hands on experience with Word2Vec, one should have an intuition about what embeddings in NLP are.</p>
 	    <p>In NLP, embeddings are <i>vector representations</i> of linguistic items. Pretty much any kind of linguistic item can in principle  be represented with a vector: word occurrences (tokens), words, sentences, paragraphs, documents, etc.</p>
 	    <p>A vector is a sequence of numbers that encodes some useful information about whatever it is one wants to represent. We are all familiar from secondary school maths with 2-dimensional vectors like coordinates. A coordinate like (2, 3) might represent a location in space, and might encode information about how to reach the location -- move 2 steps to the right and 3 steps forwards.</p>
 	    <p>Vectors can have any number of dimensions. In NLP, often vector representations of linguistic items have 100s of dimensions, and just as coordinates can encode information about how to arrive at a location, NLP vector representations can encode information about the meaning of linguistic items</p>
 	    <p>How are embeddings made to encode useful linguistic information? This is where the design of the neural network generating embeddings comes in. Neural network architecture, training procedure and training datasets are all carefully designed to enable production of useful linguistic embeddings.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to top</a></div>
 
 
-	    <h2 id='w2v'>3. Word embeddings with Word2Vec</h2>
+	    <h2 id="w2v">3. Word embeddings with Word2Vec</h2>
 	    <p>Word2Vec is a small neural network developed by researchers at Google in 2013. Their paper detailing Word2Vec can be found <a href="https://arxiv.org/abs/1301.3781">here</a>. Word2Vec produces word embeddings -- embedding representations of <i>words</i>. Word embeddings are sometimes called <i>static embeddings</i> in order to distinguish them from embedding representations of word <i>occurrences</i> or tokens. We will train a Word2Vec model on the Gutenberg dataset and then play around a bit with the word embeddings produced through this training.</p>
 	    <p>To get started with Word2Vec, make sure you have navigated into your Python project directory and have activated your virtual environment:</p>
             <pre><code class="language-bash">#### navigate to the directory containing your virtual environment
@@ -85,10 +87,11 @@ def main():
 if __name__ == '__main__':
     main()</code></pre>
 	    <p>All we've done so far is set up the proper layout of the script and imported all the packages we will need. The packages from <code>nltk</code> and <code>re</code> will enable us to conduct preprocessing. The packages from <code>gensim</code> give us a Python implementation of Word2Vec. Finally, <code>json</code> and <code>os</code> allow us to load/save JSON files and create/manage directories. Run this script to see if all packages get imported successfully.</p>
-	    
+            <div class="back-to-top"><a href="#top">↑ Back to top</a></div>
+ 
 
-	    <h2 id='preprocessing'>4. Preprocessing</h2>
-	    <p>Before training Word2Vec on our dataset, some preprocessing is needed. Word2Vec does not handle punctuation well, so we will have to get rid of those. We'll also get rid of any numbers to get rid of any potential page numbers, list markers etc. </p>
+	    <h2 id="preprocessing">4. Preprocessing</h2>
+            <p>Before training Word2Vec on our dataset, some preprocessing is needed. Word2Vec does not handle punctuation well, so we will have to get rid of those. We'll also get rid of any numbers to get rid of any potential page numbers, list markers etc. </p>
 	    <p><b>A note on stopwords:</b> For any text in any language, there will always be words that are present as a consequence of following grammatical rules -- words such as 'the', 'a', 'that' etc. These are called <i>stopwords</i>. For many NLP procedures, removal of stopwords is necessary. But for other procedures, stopword removal is not necessary and can even worsen the quality of embeddings. For the procedures we are learning about, Word2Vec and BERTopic, stopword removal is not necessary, but we'll write some code for stopword removal anyway just so that you know how to do it.</p>
 	    <p>Let's add in a preprocessing function that does all this:</p>
             <pre><code class="language-python">import nltk
@@ -169,7 +172,7 @@ def main():
 
 if __name__ == '__main__':
     main()</code></pre>
-	    <p>This function has two central loops. The first loop splits text into sentences. This is more complicated than you might think. The grammatical indicators which we use to parse long sections of text into individual sentences, which we interpret so easily, are actually pretty complicated, and we need to tell Python to distinguish between sentences separated by full stops, while telling Python to ignore full stops in honorific titles like 'Mr. ' or 'Ms. ', to take into account separation between paragraphs, and so on.</p>
+            <p>This function has two central loops. The first loop splits text into sentences. This is more complicated than you might think. The grammatical indicators which we use to parse long sections of text into individual sentences, which we interpret so easily, are actually pretty complicated, and we need to tell Python to distinguish between sentences separated by full stops, while telling Python to ignore full stops in honorific titles like 'Mr. ' or 'Ms. ', to take into account separation between paragraphs, and so on.</p>
 	    <p>To deal with this, the code uses a list of all grammatical indicators that might indicate boundaries between sentences, and then replaces them with a single <code>&lt;SEP&gt;</code> that we store as a variable <code>sep</code>. Then, we can just call <code>text.split(&lt;SEP&gt;)</code> to split text into sentences.</p>
 	    <p>You'll notice that the grammatical indicators that we have grouped under <code>&lt;SEP&gt;</code> are passed into the function as an argument, but as an argument that looks a bit different to the kinds of function arguments covered in the first session. Unlike these, it has an <code>x=y</code> form. These kind of arguments are called <i>keyword arguments</i>.</p>
 	    <p>Keyword arguments provide default values that are used if you don't specify them when calling the function. Unlike regular arguments that must be provided in the correct order, keyword arguments can be omitted entirely and the function will use their default values instead. For example, in the <code>preprocess(d, separators=['\n\n', '. ', '.--'], titles=['mr', 'mrs', 'ms', 'dr'])</code> function, if you call it as simply <code>preprocess(d)</code>, it will automatically use the default separators and titles lists. If you want to change what grammatical indicators are used for preprocessing, you can redefine the value of the <code>separators</code> keyword argument when calling the function, e.g. <code>preprocess(d, separators=[';', ', '])</code>.</p>
@@ -183,9 +186,10 @@ if __name__ == '__main__':
 	    </ul>
 	    <p>You'll notice a commented-out line for removing stopwords (<code>#            if t in stop_words: continue</code>). Let's uncomment it to see how it handles stop word removal -- we'll recomment it for Word2Vec training. The line a bit above this line, <code>stop_words = set(stopwords.words('english'))</code> gives us a <a href="https://www.w3schools.com/python/python_sets.asp">set</a> -- don't worry too much about what sets are, they are data structures that are a little bit like lists in that they can store multiple values -- from <code>nltk</code> containing stop words. The line <code> if t in stop_words: continue</code> checks if a token in a sentence is present within the stopwords set. If it is, it's a stopword, and it is not included in the final dataset.</p>
 	    <p>Once this function is defined, we call it in the <code>main()</code> block.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to top</a></div>
 
 
-	    <h2 id='training_w2v'>5. Training Word2Vec</h2>
+	    <h2 id="training_w2v">5. Training Word2Vec</h2>
             <p>Now we have done some preprocessing, we can train the Word2Vec model. Luckily, <code>gensim</code> makes this very easy to do:</p>
 	    <pre><code class="language-python">def main():
     
@@ -208,10 +212,10 @@ if __name__ == '__main__':
 	    <p>All we need are these 2 lines of code to train. The first line essentially defines what kind of model we want. It sets up a Word2Vec model to be trained in a way specified by the parameter arguments you can see -- to be trained on the sentences specified by the <code>sentences</code> keyword argument, to produce embeddings with 300 dimensions as specified by the <code>vector_size</code> parameter.</p>
 	    <p>The second line trains the model set up in the first line.</p>
 	    <p>Finally, we save the trained model so we can use its embeddings in the future if we want.</p>
+  
 
-
-	    <h2 id='examining_w2v'>6. Looking at  Word2Vec embeddings</h2>
-	    <p>By producing word embeddings, we have encoded relations of meaning into a vector space, such that the embeddings of two words that we would recognise as having similar meanings will occupy positions within vector space that are close to each other. So, we can expect that embeddings that are close to each other -- which we can measure using Euclidean distance or cosine similarity -- will represent words that are similar in meaning</p>
+	    <h2 id="examining_w2v">6. Looking at  Word2Vec embeddings</h2>
+            <p>By producing word embeddings, we have encoded relations of meaning into a vector space, such that the embeddings of two words that we would recognise as having similar meanings will occupy positions within vector space that are close to each other. So, we can expect that embeddings that are close to each other -- which we can measure using Euclidean distance or cosine similarity -- will represent words that are similar in meaning</p>
 	    <p>We can ask our Word2Vec model to give us the words that are closest to a given word in embedding space with the <code>.wv.most_similar()</code> method. Let's add in some code that will let us look at the results of using this method, and so judge how well Word2Vec has encoded relations of meaning similarity into vector space:</p>
      	    <pre><code class="language-python">def main():
     
@@ -238,19 +242,21 @@ if __name__ == '__main__':
 
 if __name__ == '__main__':
     main()</code></pre>
-	    <p>Run the code. How well has Word2Vec captured relations of similar meanings for these words?</p>
+            <p>Run the code. How well has Word2Vec captured relations of similar meanings for these words?</p>
+            <div class="back-to-top"><a href="#top">↑ Back to top</a></div>
 
 
-            <h2 id='bertopic_intro'>7. Topic modelling with BERTopic</h2>
+            <h2 id="bertopic_intro">7. Topic modelling with BERTopic</h2>
 	    <p>Topic modelling refers to any procedure designed to automatically uncover the topics expressed in some dataset of texts. One of the most popular topic modelling procedures at the moment is BERTopic, which is what we'll be learning about for the rest of the sessions.</p>
 	    <p>BERTopic is based on a large language model from the pre-ChatGPT generation, BERT. BERT was designed by <a href="https://arxiv.org/abs/1810.04805#">researchers at Google</a>, and represented the cutting edge of NLP from 2018 until November 2022, when ChatGPT was released. Like Word2Vec, BERT is designed to create high quality linguistic embeddings, which can then be used for any number of tasks.</p> 
 	    <p>Unlike Word2Vec, it does not produce embedding representations of individual words. It produced representations of word <i>occurrences</i>, also known as token embeddings. So if a text has 10 occurrences of 'phone', it will not produce a single embedding representing 'phone' like Word2Vec. It will produce 10 embeddings, one for each occurrence of 'phone'. This means that compared to Word2Vec, BERT can capture the contextually dependent character of meaning much more effectively. It would be able to, for example, distinguish between occurrences of 'phone' that refer to iPhones and occurrences that refer to Android phones. BERT is also a pre-trained model, meaning that it was trained by Google on (at the time) a vast amount of text before being released to the public, and so is available as an already trained model by default that can then be trained further, or fine-tuned, on other datasets. This means that BERT embeddings already encode a lot of linguistic information out of the box, and can be effectively used without having to train/fine-tune it oneself. All this made BERT the best language model at the time.</p>
-	    <p><a href="https://arxiv.org/abs/2203.05794">BERTopic</a> makes use of this to create an effective topic modelling procedure. It creates embedding representations of whole documents from BERT token embeddings, and then clusters these document embeddings. Documents similar in meaning get clustered together, and are taken to represent documents that express an underlying topic. To give an idea of what these topics are, BERTopic produces key term representations of each topic, which consist of the most characteristic terms of each cluster of documents.</p>  
-
-
-        <h2 id='bertopic_code'>8. Using BERTopic</h2>
-        <p>Let's write a script to use BERTopic on the Gutenberg dataset:</p>
-	<pre><code class="language-python">import pandas as pd
+            <p><a href="https://arxiv.org/abs/2203.05794">BERTopic</a> makes use of this to create an effective topic modelling procedure. It creates embedding representations of whole documents from BERT token embeddings, and then clusters these document embeddings. Documents similar in meaning get clustered together, and are taken to represent documents that express an underlying topic. To give an idea of what these topics are, BERTopic produces key term representations of each topic, which consist of the most characteristic terms of each cluster of documents.</p>  
+            <div class="back-to-top"><a href="#top">↑ Back to top</a></div>
+    
+    
+            <h2 id="bertopic_code">8. Using BERTopic</h2>
+            <p>Let's write a script to use BERTopic on the Gutenberg dataset:</p>
+            <pre><code class="language-python">import pandas as pd
 from umap import UMAP
 from hdbscan import HDBSCAN
 from bertopic import BERTopic
@@ -314,10 +320,10 @@ def main():
 
 if __name__ == '__main__':
     main()</code></pre> 
-	<p>You'll notice the preprocessing here is much more minimal than for Word2Vec. All we are doing here is splitting text into paragraphs, and BERTopic truncates text if it is too long. This isn't a problem for analysing social media content, which tends to be very short, but for longer texts like the fiction of the Gutenberg dataset, this needs to be managed.</p>
-	<p>Furthermore, unlike Word2Vec, getting rid of punctuation is not a good idea for BERTopic, since it makes use punctuation to create high quality document embeddings.</p>
-	<p>The meat of the script comes after we have set up a directory for saving a trained BERTopic model, loaded the Gutenberg dictionary and preprocessed our data:</p>
-    	<pre><code class="language-python"># Create document embeddings with BERT
+            <p>You'll notice the preprocessing here is much more minimal than for Word2Vec. All we are doing here is splitting text into paragraphs, and BERTopic truncates text if it is too long. This isn't a problem for analysing social media content, which tends to be very short, but for longer texts like the fiction of the Gutenberg dataset, this needs to be managed.</p>
+           	<p>Furthermore, unlike Word2Vec, getting rid of punctuation is not a good idea for BERTopic, since it makes use punctuation to create high quality document embeddings.</p>
+           	<p>The meat of the script comes after we have set up a directory for saving a trained BERTopic model, loaded the Gutenberg dictionary and preprocessed our data:</p>
+               	<pre><code class="language-python"># Create document embeddings with BERT
 sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
 embeddings = sentence_model.encode(docs, show_progress_bar=True)
 
@@ -333,22 +339,24 @@ model = BERTopic(
         verbose=True
         ).fit(docs, embeddings)</code></pre>
     
-    	<p>There are three main steps here:</p>
-	<ul class="research">
-	    <li>First we generate document embedding representations of each paragraph with <code>SentenceTransformer()</code>. This class uses a BERT model to construct document embeddings from token embeddings. After creating an instance of the <code>SentenceTransformer()</code> class, we then call its method <code>.encode()</code> to get our instance to produce document embeddings.</li>
-	    <li>Then, we specify the parameters we want for dimensionality reduction (done with UMAP) and clustering (done with HDBSCAN). Before clustering, BERTopic reduces the dimension of document embeddings in order to make clustering less computationally intensive. These reduced embeddings are then clustered to generate topics.  Information on what exactly the parameters in the script do can be found here <a href="https://maartengr.github.io/BERTopic/getting_started/parameter%20tuning/parametertuning.html#umap">here</a>.</li>
-	    <li>Finally, we input the UMAP and HDBSCAN processes with the parameters we just specified into a BERTopic model with the <code>BERTopic()</code> class, and then call the <code>.fit()</code> method to train the model. In this context, 'training' refers to the dimension reduction and clustering processes. We do not actually do any fine-tuning on the BERT model being used -- we rely entirely on the default pre-trained token embeddings that come out of the box</li>
-	</ul>
-	<p>Something to get familiar with here are the steps of parameter selection and training. In Python, most of the time the hard work of implementing a complex machine learning process has already been done by somebody else. We just import the classes that they wrote into our script, organise our data, and then input our data into imported classes. The only extra work we have to do is specify the parameters with which to conduct training -- which refers to any process of fitting a model to data (even simple linear regression can be thought of as a trainable machine learning algorithm) -- and then just calling whatever method is used to execute training.</p>
-	<p>Finally, let's examine the topics we've produced:</p>  
-    	<pre><code class="language-python">#### save model and topic info
+       	    <p>There are three main steps here:</p>
+	    <ul class="research">
+	        <li>First we generate document embedding representations of each paragraph with <code>SentenceTransformer()</code>. This class uses a BERT model to construct document embeddings from token embeddings. After creating an instance of the <code>SentenceTransformer()</code> class, we then call its method <code>.encode()</code> to get our instance to produce document embeddings.</li>
+	        <li>Then, we specify the parameters we want for dimensionality reduction (done with UMAP) and clustering (done with HDBSCAN). Before clustering, BERTopic reduces the dimension of document embeddings in order to make clustering less computationally intensive. These reduced embeddings are then clustered to generate topics.  Information on what exactly the parameters in the script do can be found here <a href="https://maartengr.github.io/BERTopic/getting_started/parameter%20tuning/parametertuning.html#umap">here</a>.</li>
+	        <li>Finally, we input the UMAP and HDBSCAN processes with the parameters we just specified into a BERTopic model with the <code>BERTopic()</code> class, and then call the <code>.fit()</code> method to train the model. In this context, 'training' refers to the dimension reduction and clustering processes. We do not actually do any fine-tuning on the BERT model being used -- we rely entirely on the default pre-trained token embeddings that come out of the box</li>
+	    </ul>
+	    <p>Something to get familiar with here are the steps of parameter selection and training. In Python, most of the time the hard work of implementing a complex machine learning process has already been done by somebody else. We just import the classes that they wrote into our script, organise our data, and then input our data into imported classes. The only extra work we have to do is specify the parameters with which to conduct training -- which refers to any process of fitting a model to data (even simple linear regression can be thought of as a trainable machine learning algorithm) -- and then just calling whatever method is used to execute training.</p>
+	    <p>Finally, let's examine the topics we've produced:</p>  
+    	    <pre><code class="language-python">#### save model and topic info
 model.save(f'{model_dir}/{model_name}', serialization='pickle')
 topic_info = model.get_topic_info()
 topic_info.to_csv(f'{os.getcwd()}/{model_name}_info.csv', index=False)
-</code></pre>
-    
-        <p>We save our trained BERTopic model in case we want to use it in the future, and get information about our topics with the <code>.get_topic_info()</code> method. We save this topic information in our project directory as a .csv file. Open it and see what you make of the topics.</p>
-	</div> 
+</code></pre> 
+            <p>We save our trained BERTopic model in case we want to use it in the future, and get information about our topics with the <code>.get_topic_info()</code> method. We save this topic information in our project directory as a .csv file. Open it and see what you make of the topics.</p>
+            <div class="back-to-top"><a href="#top">↑ Back to top</a></div>
+
+        </div> 
+
 
         <!-- links -->
 	<div class="links">
