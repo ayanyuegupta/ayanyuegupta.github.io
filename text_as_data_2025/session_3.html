@@ -204,6 +204,210 @@ if __name__ == '__main__':
 	    <p>This function loops through the video data we retrieved earlier. At each iteration of this loop, we retrieve the ID of a single video with <code>vid['id']['videoId']</code>. We then construct our request, and then execute it, storing the output in the variable <code>comments_d</code>. This output contains comment data. We then perform a second loop through <code>comments_d</code> to grab the data we want for each comment for storage in the dictionary <code>results</code>. We then return this data and save it as a JSON file.</p>
 	    <div class="back-to-top"><a href="#top">↑ Back to top</a></div>
 
+
+	    <h2 id="scraping">5. Webscraping</h2>
+	    <p>Let's turn to web scraping. Make a new script:</p>
+	    <pre><code class="language-python">from bs4 import BeautifulSoup
+import requests
+import os 
+import json
+
+def main():
+
+    #### scrape
+    url = 'https://books.toscrape.com'
+
+    ####save scraped data
+    data_dir = f'{os.getcwd()}/data'
+    if not os.path.exists(data_dir): os.makedirs(data_dir)
+    with open(f'{data_dir}/scraped_data.json', 'w') as f:
+        json.dump(product_info, f)
+
+
+if __name__ == '__main__':
+    main()</code></pre>
+	    <p>The key thing to note here is that the website we are going to scrape data from is <a href="http://books.toscrape.com/">books.toscrape.com</a>. This website is designed for people to practise scraping on, and will allow us to learn about how to write a script that can follow links, parse HTML source code, and find the data we want.</p>
+	    <p>However, outside of this practise context, you should note that scraping will be a lot mor difficult.  Some websites specify in their terms and conditions that scraping is not permitted -- you need to watch out for this to avoid ethical problems. Basically all websites will enforce rate limits if you scrape data too fast. This is because their servers may not be able to handle lots of people sending 1000s of requests to the servers every minute.</p>
+	    <p>Let's start writing a function that will take as input <code>url</code> and give us a dictionary containing all the data we want. If you visit the website, you'll see that it imitates an online bookstore. There are links for each book available. If you click on a book's link, you will get more information about the book -- product description, prices, etc. So, let's write a function that will first visit this mock bookstore, and then visit each book's link, and then store information about each book in a dictionary:</p>
+	    <pre><code class="language-python">from bs4 import BeautifulSoup
+import requests
+import os 
+import json
+
+
+def scrape(url):
+
+    #### send request to website and store response as a variable
+    response = requests.get(url)
+    
+    #### check if request was successful
+    if response.status_code != 200:
+        print(response.status_code)
+        quit()
+    #### parse html content
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    #### get book page links
+    books = soup.find_all('article', class_='product_pod')
+    quit()
+
+
+def main():
+
+    #### scrape
+    url = 'https://books.toscrape.com'
+
+    ####save scraped data
+    data_dir = f'{os.getcwd()}/data'
+    if not os.path.exists(data_dir): os.makedirs(data_dir)
+    with open(f'{data_dir}/scraped_data.json', 'w') as f:
+        json.dump(product_info, f)
+
+
+if __name__ == '__main__':
+    main()</code></pre>
+	    <p>We've started this function by first making a request to the book store. If the request is successful, we will get the store's HTML source code, which we can use to get the data we want. We use BeautifulSoup to parse the HTML code, which allows us to use BeautifulSoup's methods to easily retrieve sections of the source code.</p>
+	    <p>Much of web scraping involves looking through HTML source code, which we can do with our browser. Simply right click on the website and press 'View Page Source'. Looking at the book store's source code, we can see that books' links are contained within <code>article</code> tags with the class <code>"product_pod"</code>. We can use the <code>final_all()</code> method to retrieve all these tags, and, therefore, retrieve all books' links.</p>
+	    <p>However, we still need to retrieve the actual book links from these <code>article</code> tags we've just retrieved. We use the same method to do this: examine source code to find the tags containing the information we want, and use the <code>find_all</code> method to retrieve:</p>
+	    <pre><code class="language-python">from bs4 import BeautifulSoup
+import requests
+import os 
+import json
+
+
+def scrape(url):
+
+    #### send request to website and store response as a variable
+    response = requests.get(url)
+    
+    #### check if request was successful
+    if response.status_code != 200:
+        print(response.status_code)
+        quit()
+        
+    #### parse html content
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    #### get book page links
+    books = soup.find_all('article', class_='product_pod')
+    links = []
+    for book in books:
+        tags = book.find_all('a', href=True)
+        for t in tags:
+#            print(t)
+            link = url + '/' + t['href']
+#            print(link)
+            links.append(link)
+    links = list(set(links))
+    quit()
+
+
+def main():
+
+    #### scrape
+    url = 'https://books.toscrape.com'
+
+    ####save scraped data
+    data_dir = f'{os.getcwd()}/data'
+    if not os.path.exists(data_dir): os.makedirs(data_dir)
+    with open(f'{data_dir}/scraped_data.json', 'w') as f:
+        json.dump(product_info, f)
+
+
+if __name__ == '__main__':
+    main()</code></pre>
+	    <p>So, what we've done here is created a loop that iterates through each of the <code>article</code> tags. In each iteration, we find all <code>a</code> tags that contain a book link in an <code>article</code> tag, and do a second iteration through those. We construct a full link from each book link, and then collect all books' links into list <code>links</code>. Now, let's complete the function by adding in code that visits each collected book link and stores information about books in a dictionary:</p>
+	    <pre><code class="language-python">from bs4 import BeautifulSoup
+import requests
+import os 
+import json
+
+
+def scrape(url):
+
+    #### send request to website and store response as a variable
+    response = requests.get(url)
+    
+    #### check if request was successful
+    if response.status_code != 200:
+        print(response.status_code)
+        quit()
+        
+    #### parse html content
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    #### get book page links
+    books = soup.find_all('article', class_='product_pod')
+    links = []
+    for book in books:
+        tags = book.find_all('a', href=True)
+        for t in tags:
+#            print(t)
+            link = url + '/' + t['href']
+#            print(link)
+            links.append(link)
+    links = list(set(links))
+
+    #### visit each book page and get product description
+    product_info = {}
+    for l in tqdm(links):
+        response = requests.get(l)
+        if response.status_code != 200:
+            print(response.status_code)
+            quit()
+
+        d = {}
+        
+        #### parse content
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        #### get book title
+        d['title'] = soup.find('title').string
+        
+        #### get product description
+        #### get all p tags
+        tags = soup.find_all('p')
+        for t in tags:
+            if not t.attrs:
+                d['description'] = t.string
+        
+        #### get price and universal product code
+        table = soup.find('table', class_="table table-striped")
+        tags = table.find_all('tr')
+        for t in tags:
+            #### get price
+            if t.find('th').string == 'Price (excl. tax)':
+                d['price'] = t.find('td').string
+            #### use universal product code as unique key for 
+            #### each book
+            if t.find('th').string == 'UPC':
+                product_info[t.find('td').string] = d
+
+    return product_info
+
+def main():
+
+    #### scrape
+    url = 'https://books.toscrape.com'
+
+    #### save scraped data
+    data_dir = f'{os.getcwd()}/data'
+    if not os.path.exists(data_dir): os.makedirs(data_dir)
+    with open(f'{data_dir}/scraped_data.json', 'w') as f:
+        json.dump(product_info, f)
+
+
+if __name__ == '__main__':
+    main()</code></pre>
+            <p>You'll notice that the second loop for visiting each book's link follow the same steps as the first loop for collecting each book's link.</p>
+	    <ul class="research">
+                <li>We check if our connection to each book's link is successful.</li>
+		<li>We parse each link's HTML source code with <code>BeautifulSoup</code>.</li>
+		<li>We find the tags containing the information we want in the parsed HTML using <code>.find_all</code> and <code>.find()</code>.</li>
+            </ul>
+	    <p>After finding each item of information we want, the loop stores each item in the dictionary <code>product_info</code>.</p>
+	    <div class="back-to-top"><a href="#top">↑ Back to top</a></div>
+
 	</div> 
 
         <!-- links -->
