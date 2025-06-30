@@ -1,26 +1,30 @@
-<!DOCTYPE html>
-<html lang="eng">
-    <head>
-	<title>Title</title>
-	<link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <h1>TITLE</h1>
+function loadTemplate(title, content) {
+    document.title = title;
+    document.body.innerHTML = `
+        <header>
+            <h1>AYAN-YUE GUPTA</h1>
+	</header>
 
-        <!-- navigation-->
-        <div class="links">
+	<!-- navigation-->
+	<div class="links">
 	    <a href="/index.html">Home</a>
 	    <a href="/research.html">Research</a>
+	    <a href="/teaching.html">Teaching</a>
 	    <a href="/art.html">Art</a>
 	    <a href="/assets/CV.pdf">C.V.</a>
 	</div>
+        
+	<main>
+	    ${content}
+        </main>
 
-	<!-- links -->
-	<div class="links" style="margin-top:100px;">
+        <!-- links -->
+	<div class="links">
 	    <a href="https://github.com/ayanyuegupta">github</a>
 	    <a href="https://www.instagram.com/ayanyuegupta/">instagram</a>
 	    <a href="https://www.youtube.com/channel/UClNL5hp3ENN-B0owGvb4dpw">youtube</a>
 	</div>
 
-    </body> 
-</html>
+    `;
+}
+	
