@@ -185,4 +185,76 @@ figcaption {
 
 .back-to-top a:hover {
                 text-decoration: underline;
+
+}
+
+.form-group label {
+	font-family: 'Roboto';
+	font-weight: normal;
+	font-size: 22px;
+	text-align: justify;
+	color: rgb(255, 160, 155);
+}
+
+
+.contact-container {
+	margin: 50px 150px 0 150px;
+}
+
+.contact-container h2 {
+	text-align: justify
+}
+
+.contact-container p {
+	text-align: justify
+}
+
+.form-group {
+	margin-bottom: 20px;
+	text-align: justify;
+}
+
+
+.form-group input {
+	height: 22px;
+	font-size: 22px;
+}
+
+
+.form-group textarea {
+	margin: 0 auto;
+	height: 100px;
+	width: 700px;
+	font-size: 22px;
+	text-align: justify;
+}
+
+
+.form-group input,
+.form-group textarea {
+	background-color: rgb(255, 0, 0);
+	border: rgb(255, 0, 0);
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus {
+	outline: none;
+}
+.form-group label {
+	display: block;
+	text-align: justify;
+}
+
+
+.submit-btn {
+	display: block;
+	margin: 0 0;
+	padding: 10px 20px;
+	font-family: 'Roboto';
+	font-weight: normal;
+	font-size: 22px;
+	text-align: justify;
+	background: rgb(255, 160, 155);
+	color: rgb(255, 0, 0);
 }

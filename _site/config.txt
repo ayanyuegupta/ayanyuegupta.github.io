@@ -1,0 +1,3 @@
+PUBLIC_KEY=m2zZKWVRJLd6b7YJs
+SERVICE_ID=service_lda1k8m
+

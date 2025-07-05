@@ -11,6 +11,7 @@ function loadTemplate(title, content) {
 	    <a href="/research.html">Research</a>
 	    <a href="/teaching.html">Teaching</a>
 	    <a href="/art.html">Art</a>
+	    <a href="/contact.html">Contact</a>
 	    <a href="/assets/CV.pdf">C.V.</a>
 	</div>
         
