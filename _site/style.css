@@ -68,6 +68,13 @@ figcaption {
 }
 
 
+img {
+	box-shadow: 
+	0 0 64px rgba(0, 0, 0, 1);
+
+}
+
+
 .menu {
 	width: 150px;
 }
