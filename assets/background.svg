@@ -25,9 +25,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="2080.3081"
-     inkscape:cy="1261.4785"
+     inkscape:zoom="0.5"
+     inkscape:cx="1428"
+     inkscape:cy="398"
      inkscape:window-width="1920"
      inkscape:window-height="1004"
      inkscape:window-x="0"
@@ -51,6 +51,18 @@
   </sodipodi:namedview>
   <defs
      id="defs1">
+    <linearGradient
+       id="linearGradient1247"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop1247" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop1248" />
+    </linearGradient>
     <linearGradient
        id="linearGradient42"
        inkscape:collect="always">
@@ -2623,6 +2635,15 @@
        y1="49.097073"
        x2="80.190926"
        y2="94.097069" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1247"
+       id="linearGradient1248"
+       x1="490"
+       y1="10"
+       x2="490"
+       y2="180"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <g
      inkscape:label="Layer 1"
@@ -5188,5 +5209,12 @@
        d="M 850,5.0000009 V 49.999998 c 30,2e-6 30,-19.999999 60,-20 30.00001,10e-7 30.00001,20.000002 60,20 L 971,50 V 4.9999999 Z"
        id="path16-9-9-2-2"
        sodipodi:nodetypes="ccccccc" />
+    <rect
+       style="fill:url(#linearGradient1248);fill-opacity:1;stroke:none;stroke-width:0.79375;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1246"
+       width="961"
+       height="742.5"
+       x="10.000008"
+       y="5" />
   </g>
 </svg>
